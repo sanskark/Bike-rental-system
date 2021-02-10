@@ -1,0 +1,97 @@
+{% extends 'bikerental/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+    body {
+        background-image: none;
+        background-color: rgb(255, 248, 152);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 85vh;
+    }
+
+    #signupheading {
+        text-align: center;
+        letter-spacing: .5em;
+        font-weight: 500;
+    }
+
+    .addbike-section {
+        background-color: rgb(255, 255, 255);
+
+        margin: auto;
+
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(66, 47, 47, 0.11);
+        width: 60rem;
+        border-radius: 1%;
+    }
+</style>
+<div class="addbike-section px-3 py-2">
+    <form action="{% url 'dealer-addnewbike' %}" method="POST" enctype="multipart/form-data" class="">
+        {% csrf_token %}
+        <div class="form-group">
+            <legend class="mb-1" id="signupheading">ADD YOUR NEW BIKE HERE</legend>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="companyname">Company name</label>
+                <input type="text" class="form-control" id="companyname" name="company_name">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="model">Model name</label>
+                <input type="text" class="form-control" id="model" name="model_name" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="regnumber">Registration number</label>
+                <input type="text" class="form-control" id="regnumber" name="reg_number" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="seatcap">Seat capacity</label>
+                <input type="number" class="form-control" id="seatcap" min="1" max="3" name="seat_capcity" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="loc">Location</label>
+                <select class="form-control location" id='loc' name="cur_location" required>
+                    {% for loc in locations %}
+                    <option value="{{ loc.location_name }}">{{ loc.location_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="rpd">Rent per day</label>
+                <input type="number" class="form-control" id="rpd" min="0" name="rent_per_day" required>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="tdk">Total driven kms</label>
+                <input type="number" class="form-control" id="tdk" min="0" name="driven_kms" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="pickup">Pickup address</label>
+                <input type="text" name="pickup_add" class="form-control" id="pickup" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="dropoff">Dropoff address</label>
+                <input type="text" name="dropoff_add" class="form-control" id="dropoff" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="bikeimg">Bike image</label><br>
+                <input type="file" class="" id="bikeimg" name="bike_image" required>
+            </div>
+        </div>
+        <div class="form-row justify-content-center mt-2">
+            <button type="submit" class="btn btn-warning btn-lg px-5">Add bike</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}

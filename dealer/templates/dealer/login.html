@@ -1,0 +1,46 @@
+{% extends 'bikerental/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+    body {
+        background-image: none;
+        background-color:rgb(255, 248, 152);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 85vh;
+    }
+
+    #signupheading {
+        text-align: center;
+        letter-spacing: .5em;
+        font-weight: 500;
+    }
+</style>
+<div class="content-section px-3 py-3">
+    <!-- <div>
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div> -->
+    <form method="POST" class="">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="mb-1" id="signupheading">DEALER LOG IN</legend>
+            {{ form|crispy }}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-warning btn-block" type="submit">Log in</button>
+        </div>
+    </form>
+    <div class="pt-1 text-right">
+        <a class="small " href="{% url 'dealer-register' %}">
+            Need An Account?
+        </a>
+    </div>
+</div>
+{% endblock content %}

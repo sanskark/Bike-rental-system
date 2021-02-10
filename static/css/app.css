@@ -1,0 +1,53 @@
+body{
+    background-image: url('img/bike2.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    margin-top: 5rem;
+}
+
+.navbar{
+    background-color: white;
+}
+
+input[type='text'],
+input[type='email'],
+input[type='password'],
+input[type='number'],
+input[type='date']{
+        background-color: rgb(245, 244, 244);
+        border: none;
+}
+
+#locationcard{
+    background-color: white;
+
+    margin-top: 11rem;
+    margin-left: 10rem;
+    margin-right: 9rem;
+    padding-inline: 1rem;
+    width: 20rem;
+    border-radius: 1%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.locationcardhead{
+    font-weight: 400;
+}
+
+
+.content-section {
+    background-color: white;
+
+    margin: auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(66, 47, 47, 0.11);
+    width: 26.5rem;
+
+    border-radius: 1%;
+}
+
+.account-img {
+    height: 100px;
+    width: 100px;
+    margin: auto;
+}
+

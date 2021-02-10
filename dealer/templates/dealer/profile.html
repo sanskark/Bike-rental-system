@@ -1,0 +1,71 @@
+{% extends 'bikerental/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+    body {
+        background-image: none;
+        background-color: #f3f3f3;
+        display: flex;
+    }
+
+    #profileright {
+        width: 32rem;
+    }
+
+    .media-body {
+        margin: auto;
+        padding-top: .5rem;
+        margin-left: 1rem;
+    }
+
+    .row {
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="content-section px-3 py-2">
+            <div class="media mb-3">
+                <img class="rounded-circle account-img" src="{{ user.dealerprofile.profile_pic.url }}" alt="">
+                <div class="media-body">
+                    <h2 class="account-heading">{{ user.username }}</h2>
+                    <p class="text-secondary">{{ user.email }}</p>
+                </div>
+            </div>
+            <form method="POST" enctype="multipart/form-data" class="">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    {{ d_form|crispy }}
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-outline-warning" type="submit">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="content-section px-3 py-2" id="profileright">
+            <!--FORM-->
+            <form method="POST" enctype="multipart/form-data" class="">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    {{ dinfo_form|crispy }}
+                </fieldset>
+            </form>
+            <form method="POST" enctype="multipart/form-data" class="">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    {{ dp_form|crispy }}
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-warning align" type="submit">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

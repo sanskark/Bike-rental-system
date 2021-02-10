@@ -1,0 +1,75 @@
+{% extends 'bikerental/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+    body {
+        background-image: none;
+        background-color: #f3f3f3;
+        display: flex;
+    }
+
+    #profileright {
+        width: 32rem;
+    }
+
+    .media-body {
+        margin: auto;
+        padding-top: .5rem;
+        margin-left: 1rem;
+    }
+
+    .row {
+        margin-top: .2rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+</style>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class=" content-section px-3 py-2">
+            <div class="media mb-3">
+                <img class="rounded-circle account-img" src="{{ user.profile.profile_pic.url }}" alt="">
+                <div class="media-body">
+                    <h2 class="account-heading">{{ user.username }}</h2>
+                    <p class="text-secondary">{{ user.email }}</p>
+                </div>
+            </div>
+            <form method="POST" enctype="multipart/form-data" class="">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    {{ c_form|crispy }}
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-outline-warning" type="submit">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="content-section px-3 py-2" id="profileright">
+            <!--FORM-->
+            <div class="mt-3 ml-5 list-inline">
+                <div class="list-inline-item">
+                    <img class="rounded account-img mr-5" src="{{ user.profile.id_proof.url }}" alt="">
+                    <p class="small ml-4">ID proof</p>
+                </div>
+                <div class="list-inline-item">
+                    <img class="rounded account-img ml-5" src="{{ user.profile.driving_license.url }}" alt="">
+                    <p class="small ml-5 pl-2">Driving license</p>
+                </div>
+            </div>
+            <form method="POST" enctype="multipart/form-data" class="">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    {{ cp_form|crispy }}
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-warning align" type="submit">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
