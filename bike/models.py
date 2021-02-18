@@ -31,3 +31,13 @@ class Bike(models.Model):
             output_size = (250, 150)
             bike_img.thumbnail(output_size)
             bike_img.save(self.image.path)
+
+class Booking(models.Model):
+    booking_id = models.IntegerField(primary_key=True, auto_created=True)
+    bike_id = models.ForeignKey(Bike,on_delete=models.CASCADE, default='')
+    customer_id = models.ForeignKey('customer.Customer',on_delete=models.CASCADE, default='')
+    pickup_date = models.DateField()
+    dropoff_date = models.DateField()
+
+    def __str__(self):
+        return f'{self.bike_id}, {self.customer_id}, {self.pickup_date}, {self.dropoff_date}'

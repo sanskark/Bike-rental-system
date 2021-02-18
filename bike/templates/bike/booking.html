@@ -1,0 +1,42 @@
+{% extends 'bike/bikebase.html' %}
+{% block content %}
+<style>
+    body {
+        background-image: none;
+    }
+
+    .bikedate {
+        justify-content: space-between;
+    }
+</style>
+<div class="row mt-1">
+    <div class="col-md-8 card">
+        <h2>SUMMARY</h2>
+        <div class="row">
+            <div class="col-md-3">
+                <img class="rounded account-img ml-5" src="{{ bike.image.url }}" alt="">
+                <div> {{ bike.bike_company}} {{ bike.bike_model}}</div>
+            </div>
+            <div class="col-md-6">
+                <div class="row bikedate">
+
+                    <div>{{pickup_date}}</div>
+                    <div>to</div>
+                    <div> {{dropoff_date}}</div>
+
+                </div>
+                <div class="row">
+                    <div>pick up address: </div> <br>
+                    <div> {{bike.pickup_add}}</div>
+
+                </div>
+                <div class="row">dropoff address: {{bike.dropoff_add}}</div>
+            </div>
+            <div class="col-md-3">
+
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock content %}
