@@ -96,9 +96,9 @@
         <div class="pt-1 ml-4">
             {% if booking.is_completed %}
             {% else %}
-            <form action="#" enctype="multipart/form-data" method="POST" class="">
+            <form action="{% url 'customer-cancelbooking' %}" enctype="multipart/form-data" method="POST" class="">
                 {% csrf_token %}
-                <button class="btn btn-danger btn-sm myridesbutton" value="{{ bike.bike_id }}"
+                <button class="btn btn-danger btn-sm myridesbutton" value="{{ booking.booking_id }}"
                     name="cancelbutton">Cancel</button>
             </form>
             {% endif %}

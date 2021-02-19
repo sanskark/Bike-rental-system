@@ -8,6 +8,7 @@ from .forms import CustomerSignupForm
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import CustomerUpdateForm, CustomerProfileUpdateForm
+from datetime import date
 
 # Create your views here.
 
@@ -75,6 +76,7 @@ def profile(request):
     }
     return render(request, 'customer/profile.html', context)
 
+@login_required
 def my_rides(request):
     all_booking = list(Booking.objects.all())
     loggedin_userid = request.user.id
@@ -83,7 +85,24 @@ def my_rides(request):
 
     for b in all_booking:
         if str(b.customer.user_id) == str(loggedin_userid):
+            if date.today() > b.dropoff_date:
+                b.is_completed = True
+                b.save()
             user_booking.append(b)
             count = count + 1
     # return HttpResponse(count)
     return render(request,'customer/myrides.html',{'user_booking': user_booking})
+
+def cancel_booking(request):
+    if request.method == "POST":
+        booking_id=request.POST['cancelbutton']
+        current_booking = Booking.objects.get(booking_id=booking_id)
+
+        if date.today() < current_booking.pickup_date:
+            Booking.objects.get(booking_id=booking_id).delete()
+            messages.success(request, 'Your ride has been canceled successfully!')
+            return redirect('customer-myrides')
+        messages.warning(request, 'You can not cancel this ride!')
+        return redirect('customer-mybikes')
+
+    return redirect('customer-mybikes')

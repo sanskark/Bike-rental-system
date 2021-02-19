@@ -96,7 +96,7 @@
 
                             {% if user.is_authenticated and user.is_customer %}
                             <li class="nav-item">
-                                <a class="btn btn-light my-2 my-sm-0 mr-2" href="#">My Rides</a>
+                                <a class="btn btn-light my-2 my-sm-0 mr-2" href="{% url 'customer-myrides' %}">My Rides</a>
                             </li>
                             <li class="nav-item">
                                 <a class="btn btn-light my-2 my-sm-0 mr-2"

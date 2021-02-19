@@ -5,35 +5,50 @@ from bikerental.models import User
 from customer.models import Customer
 from django.contrib import messages
 import easy_date
-import datetime
+from datetime import date
 # Create your views here.
 
 @login_required
 def bikes_list(request):
     if request.method == 'POST':
         all_bikes = list(Bike.objects.all())
+        all_booking = list(Booking.objects.all())
+
         selected_city = request.POST['selectedcity']
 
         pickup_date = str(request.POST['pickupDate'])
         dropoff_date = str(request.POST['dropoffDate'])
 
+        #pickup_date = str to date
+        pickup = easy_date.convert_from_string(pickup_date, '%Y-%m-%d', '%d-%m-%Y', date)
+        dropoff = easy_date.convert_from_string(dropoff_date, '%Y-%m-%d', '%d-%m-%Y', date)
+
         request.session['pickupDate'] = pickup_date
         request.session['dropoffDate'] = dropoff_date
 
-        selected_bikes = []
+
+        selected_bikes=[]
 
         count = 0
         for b in all_bikes:
             if str(b.bike_location).lower() == str(selected_city).lower() and b.is_confirmed and not b.is_on_halt:
                 selected_bikes.append(b)
-                count = count + 1
 
-        if count != 0:
+        temp_bikes = selected_bikes.copy()
+
+        for bike in temp_bikes:
+            for booking in all_booking:
+                if str(booking.bike.bike_id) == str(bike.bike_id):
+                    if pickup <= booking.dropoff_date and dropoff >= booking.pickup_date:
+                        print(bike)
+                        count = count + 1
+                        selected_bikes.remove(bike)
+
+        if selected_bikes.count != 0:
             return render(request, 'bike/viewbike.html', {'selected_bikes': selected_bikes})
-            # return HttpResponse(isinstance(new_p,datetime.date))
-        return HttpResponse('<h1 class="display-1">No bike available in selected city</h1>')
 
-    return redirect('/')
+        return HttpResponse('<h1 class="display-1">No bike available in selected city</h1>')
+    return redirect('home')
 
 @login_required
 def booking(request):
@@ -44,10 +59,10 @@ def booking(request):
         loggedin_userid = request.user.id
         customer = User.objects.get(id=loggedin_userid)
 
-        pickup_date = easy_date.convert_from_string(request.session['pickupDate'], '%Y-%m-%d', '%d-%m-%Y', datetime.date)
-        dropoff_date = easy_date.convert_from_string(request.session['dropoffDate'], '%Y-%m-%d', '%d-%m-%Y', datetime.date)
+        pickup_date = easy_date.convert_from_string(request.session['pickupDate'], '%Y-%m-%d', '%d-%m-%Y', date)
+        dropoff_date = easy_date.convert_from_string(request.session['dropoffDate'], '%Y-%m-%d', '%d-%m-%Y', date)
 
-        total_days = (dropoff_date-pickup_date).days
+        total_days = (dropoff_date-pickup_date).days + 1
         total_price = int(bike.rent_per_day) * int(total_days)
         return render(request,'bike/booking.html',{'bike': bike, 'customer': customer, 'pickup_date': pickup_date, 'dropoff_date': dropoff_date, 'total_days': total_days, 'total_price': total_price});
     return redirect('home')
@@ -67,9 +82,9 @@ def confirm_booking(request):
         new_booking.dropoff_date= request.session['dropoffDate']
 
         pickup_date = easy_date.convert_from_string(request.session['pickupDate'], '%Y-%m-%d', '%d-%m-%Y',
-                                                    datetime.date)
+                                                    date)
         dropoff_date = easy_date.convert_from_string(request.session['dropoffDate'], '%Y-%m-%d', '%d-%m-%Y',
-                                                     datetime.date)
+                                                     date)
 
         total_days = (dropoff_date - pickup_date).days
         total_rent = int(bike.rent_per_day) * int(total_days)
