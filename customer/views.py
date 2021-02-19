@@ -1,8 +1,9 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render,HttpResponse
 from django.contrib.auth import login, authenticate, logout
 from django.views.generic import CreateView
 from bikerental.models import User
+from bike.models import Booking
 from .forms import CustomerSignupForm
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
@@ -73,3 +74,16 @@ def profile(request):
         'cp_form': cp_form
     }
     return render(request, 'customer/profile.html', context)
+
+def my_rides(request):
+    all_booking = list(Booking.objects.all())
+    loggedin_userid = request.user.id
+    user_booking = []
+    count = 0
+
+    for b in all_booking:
+        if str(b.customer.user_id) == str(loggedin_userid):
+            user_booking.append(b)
+            count = count + 1
+    # return HttpResponse(count)
+    return render(request,'customer/myrides.html',{'user_booking': user_booking})

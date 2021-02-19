@@ -12,7 +12,8 @@
         width: 250px;
         margin: auto;
     }
-    .card{
+
+    .card {
         width: 21rem;
         margin: auto;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(66, 47, 47, 0.11);
@@ -21,23 +22,26 @@
 <div class="row mt-1">
     {% for bike in selected_bikes %}
     <div class="col-3 mt-2">
-        <div class="card" style="">
-            <h6 class="text-muted" style="margin: auto; margin-top: 1rem;">{{ bike.bike_company }} {{ bike.bike_model }}
-            </h6>
-            <img src="{{ bike.image.url }}" class="card-img-top" alt="...">
-            <div class="card-body py-0">
-                <p class="text-muted">Seat capacity : {{ bike.seat_capacity }}</p>
-                <div class="row" style="text-align: center;">
-                    <div class="col-6">
-                        <span> <span>&#8377</span> {{ bike.rent_per_day }} </span>
-                        <p class="small text-muted">{{ bike.driven_kms }} km driven</p>
-                    </div>
-                    <div class="col-6">
-                        <a href="#" class="btn btn-warning px-5 mb-0">Book</a>
+        <form action="{% url 'bike-booking' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card">
+                <h6 class="text-muted" style="margin: auto; margin-top: 1rem;">{{ bike.bike_company }} {{bike.bike_model}}</h6>
+                <img src="{{ bike.image.url }}" class="card-img-top" alt="...">
+                <div class="card-body py-0">
+                    <p class="text-muted">Seat capacity : {{ bike.seat_capacity }}</p>
+                    <div class="row" style="text-align: center;">
+                        <div class="col-6">
+                            <span> <span>&#8377</span> {{ bike.rent_per_day }} </span>
+                            <p class="small text-muted">{{ bike.driven_kms }} km driven</p>
+                        </div>
+                        <div class="col-6">
+                            <button type="submit" name="book_button" value="{{ bike.bike_id }}"
+                                class="btn btn-warning px-5 mb-0">Book</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
     {% endfor %}
 </div>

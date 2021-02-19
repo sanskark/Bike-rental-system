@@ -3,9 +3,41 @@
 <style>
     body {
         background-image: none;
+        background-color: rgb(241, 241, 241);
     }
 
     .bikedate {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .BookButton {
+        display: flex;
+        flex-direction: row-reverse;
+    }
+
+    .card {
+        margin: auto;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(66, 47, 47, 0.11);
+    }
+
+    .bikebookingimg {
+
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin: auto;
+    }
+
+    .booking-img {
+        height: 150px;
+        width: 150px;
+    }
+
+    .summary {
+        display: flex;
+        flex-direction: row;
         justify-content: space-between;
     }
 </style>
@@ -13,27 +45,41 @@
     <div class="col-md-8 card">
         <h2>SUMMARY</h2>
         <div class="row">
-            <div class="col-md-3">
-                <img class="rounded account-img ml-5" src="{{ bike.image.url }}" alt="">
-                <div> {{ bike.bike_company}} {{ bike.bike_model}}</div>
-            </div>
-            <div class="col-md-6">
-                <div class="row bikedate">
-
-                    <div>{{pickup_date}}</div>
-                    <div>to</div>
-                    <div> {{dropoff_date}}</div>
-
+            <div class="col-md-4 bikebookingimg">
+                <div class="">
+                    <div>
+                        <img class="rounded booking-img" src="{{ bike.image.url }}" alt="">
+                    </div>
+                    <div class="pl-2"> {{ bike.bike_company}} {{ bike.bike_model}}</div>
                 </div>
-                <div class="row">
-                    <div>pick up address: </div> <br>
-                    <div> {{bike.pickup_add}}</div>
-
-                </div>
-                <div class="row">dropoff address: {{bike.dropoff_add}}</div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-8">
+                <div class="bikedate border-bottom pb-2">
+                    <div>{{ pickup_date }} </div>
+                    <div class="font-weight-bold">to</div>
+                    <div> {{ dropoff_date }}</div>
+                </div>
 
+                <div class="mt-2">
+                    <div class="font-weight-bold">pickup address:</div>
+                    <div>{{ bike.pickup_add }}</div>
+                </div>
+                <div class="border-bottom pb-2">
+                    <div class="font-weight-bold">dropoff address:</div>
+                    <div>{{ bike.dropoff_add }}</div>
+                </div>
+                <div class="mt-2">
+                    <div class="summary">Rent per day : <span></span>{{ bike.rent_per_day }} &#8377</span></div>
+                    <div class="summary">Total days : <span>{{ total_days }}</span></div>
+                    <div class="summary">Total rent : <span>{{ total_price }} &#8377</span></div>
+                </div>
+                <form action="{% url 'bike-confirmbooking' %}" class="mb-0" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="BookButton">
+                        <button type="submit" class="btn btn-warning px-5 my-2" name="confirm_book_button"
+                            value="{{bike.bike_id}}">Book</button>
+                    </div>
+                </form>
             </div>
 
         </div>

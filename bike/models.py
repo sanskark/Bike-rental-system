@@ -34,10 +34,13 @@ class Bike(models.Model):
 
 class Booking(models.Model):
     booking_id = models.IntegerField(primary_key=True, auto_created=True)
-    bike_id = models.ForeignKey(Bike,on_delete=models.CASCADE, default='')
-    customer_id = models.ForeignKey('customer.Customer',on_delete=models.CASCADE, default='')
-    pickup_date = models.DateField()
-    dropoff_date = models.DateField()
+    bike = models.ForeignKey(Bike,on_delete=models.CASCADE, default='')
+    customer = models.ForeignKey('customer.Customer',on_delete=models.CASCADE, default='')
+    pickup_date = models.DateField(auto_now=False, auto_now_add=False)
+    dropoff_date = models.DateField(auto_now=False, auto_now_add=False)
+    is_completed = models.BooleanField(default=False)
+    total_days = models.PositiveIntegerField(default=0)
+    total_rent = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return f'{self.bike_id}, {self.customer_id}, {self.pickup_date}, {self.dropoff_date}'
+        return f'{self.bike}, {self.customer}, {self.pickup_date}, {self.dropoff_date}'

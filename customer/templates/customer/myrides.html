@@ -1,0 +1,109 @@
+{% extends 'bikerental/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+    body {
+        background-image: none;
+        background-color: #f3f3f3;
+        display: flex;
+        /* flex-direction: column;
+        justify-content: center; */
+        min-height: 85vh;
+    }
+
+    #myridesheading {
+        text-align: center;
+        letter-spacing: .5em;
+        font-weight: 500;
+    }
+
+    .row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .card {
+        width: 60rem;
+        margin: auto;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(66, 47, 47, 0.11);
+        margin-bottom: .5rem;
+    }
+
+    .bikeimg {
+        width: 290px;
+        height: 220px;
+        margin: .5rem .5rem;
+    }
+
+    .lead {
+        font-size: medium;
+        font-weight: 500;
+    }
+
+    span {
+        font-weight: 400;
+    }
+
+    .myridesbutton {
+        width: 7.5rem;
+        height: 2.1rem;
+    }
+
+    .buttons {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .dates {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+</style>
+<div class="row">
+    <legend class="mt-0" id="myridesheading">MY RIDES</legend>
+</div>
+{% for booking in user_booking %}
+<div class="row card no-gutters">
+    <div class="col-4">
+        <img src="{{ booking.bike.image.url }}" alt="" class="bikeimg">
+    </div>
+    <div class="col-6 pl-0">
+        <div class="lead mt-2 border-bottom pb-1">Bike : <span>{{ booking.bike.bike_company }} {{booking.bike.bike_model}}</span></div>
+        <div class="dates border-bottom py-1">
+            <div class="lead">Pickup date : <span>{{ booking.pickup_date }}</span></div>
+            <div class="lead">Dropoff date : <span>{{ booking.dropoff_date }}</span></div>
+        </div>
+        <div class="border-bottom py-1">
+            <div class="lead mb-1">Pickup address : <span>{{ booking.bike.pickup_add }}</span></div>
+            <div class="lead ">Dropoff address: <span>{{ booking.bike.dropoff_add }}</span></div>
+        </div>
+        <div class="pt-1">
+            <div class="lead">Total days : <span>{{ booking.total_days }}</span></div>
+            <div class="lead">Total rent : <span>&#8377 {{ booking.total_rent }}</span></div>
+        </div>
+    </div>
+    <div class="col-2 buttons">
+        <div class="pt-2 ml-4">
+            {% if booking.is_completed %}
+            <button type="button" class="btn btn-outline-success btn-sm myridesbutton" disabled>Completed</button>
+            {% else %}
+            <button type="button" class="btn btn-outline-danger btn-sm myridesbutton" disabled>Not completed</button>
+            {% endif %}
+        </div>
+        <div class="pt-1 ml-4">
+            {% if booking.is_completed %}
+            {% else %}
+            <form action="#" enctype="multipart/form-data" method="POST" class="">
+                {% csrf_token %}
+                <button class="btn btn-danger btn-sm myridesbutton" value="{{ bike.bike_id }}"
+                    name="cancelbutton">Cancel</button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock content %}
