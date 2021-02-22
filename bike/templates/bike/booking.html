@@ -23,7 +23,6 @@
     }
 
     .bikebookingimg {
-
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -31,8 +30,14 @@
     }
 
     .booking-img {
-        height: 150px;
-        width: 150px;
+        height: 170px;
+        width: 300px;
+    }
+
+    .bikename {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
     }
 
     .summary {
@@ -50,7 +55,9 @@
                     <div>
                         <img class="rounded booking-img" src="{{ bike.image.url }}" alt="">
                     </div>
-                    <div class="pl-2"> {{ bike.bike_company}} {{ bike.bike_model}}</div>
+                    <div class="bikename">
+                        <div class="lead font-weight-normal"> {{ bike.bike_company}} {{ bike.bike_model}}</div>
+                    </div>
                 </div>
             </div>
             <div class="col-md-8">
@@ -69,7 +76,7 @@
                     <div>{{ bike.dropoff_add }}</div>
                 </div>
                 <div class="mt-2">
-                    <div class="summary">Rent per day : <span></span>{{ bike.rent_per_day }} &#8377</span></div>
+                    <div class="summary">Rent per day : <span>{{ bike.rent_per_day }} &#8377</span></div>
                     <div class="summary">Total days : <span>{{ total_days }}</span></div>
                     <div class="summary">Total rent : <span>{{ total_price }} &#8377</span></div>
                 </div>

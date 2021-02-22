@@ -16,17 +16,14 @@
         letter-spacing: .5em;
         font-weight: 500;
     }
+
+    .extrainfo {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
 </style>
 <div class="content-section px-3 py-3">
-    <!-- <div>
-        {% if messages %}
-        {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">
-            {{ message }}
-        </div>
-        {% endfor %}
-        {% endif %}
-    </div> -->
     <form method="POST" class="">
         {% csrf_token %}
         <fieldset class="form-group">
@@ -34,11 +31,14 @@
             {{ form|crispy }}
         </fieldset>
         <div class="form-group">
-            <button class="btn btn-warning btn-block" type="submit">Log in</button>
-        </div>
+            <button class="btn btn-warning btn-block" type="submit">Log in</button </div>
     </form>
-    <div class="pt-1 text-right">
-        <a class="small " href="{% url 'customer-signup' %}">
+    <div class="extrainfo pt-1">
+        <small class="text-muted">
+            <a href="{% url 'password_reset' %}">forgot password?</a>
+        </small>
+
+        <a class="small" href="{% url 'customer-signup' %}">
             Need An Account?
         </a>
     </div>

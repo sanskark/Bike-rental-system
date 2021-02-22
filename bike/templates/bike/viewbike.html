@@ -18,18 +18,48 @@
         margin: auto;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(66, 47, 47, 0.11);
     }
+
+    .dates {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    #cityheading {
+        text-align: center;
+        letter-spacing: .5em;
+        font-weight: 500;
+    }
+
+    .seat {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
 </style>
+<div class="row">
+    <legend class="mt-0 text-uppercase" id="cityheading">{{selected_city}}</legend>
+</div>
 <div class="row mt-1">
     {% for bike in selected_bikes %}
     <div class="col-3 mt-2">
         <form action="{% url 'bike-booking' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="card">
-                <h6 class="text-muted" style="margin: auto; margin-top: 1rem;">{{ bike.bike_company }} {{bike.bike_model}}</h6>
+                <h6 class="text-muted" style="margin: auto; margin-top: 1rem;">{{ bike.bike_company }}
+                    {{bike.bike_model}}</h6>
                 <img src="{{ bike.image.url }}" class="card-img-top" alt="...">
                 <div class="card-body py-0">
-                    <p class="text-muted">Seat capacity : {{ bike.seat_capacity }}</p>
-                    <div class="row" style="text-align: center;">
+                    <div class="dates my-2 border-top">
+                        <div class="lead">{{ pickup }}</div>
+                        <div class="text-muted font-weight-bold">to</div>
+                        <div class="lead">{{ dropoff }}</div>
+                    </div>
+                    <div class="border-bottom pb-2 seat">
+                        <div class="text-muted ">Seat capacity : </div>
+                        <div class="">{{ bike.seat_capacity }}</div>
+                    </div>
+                    <div class="row mt-2" style="text-align: center;">
                         <div class="col-6">
                             <span> <span>&#8377</span> {{ bike.rent_per_day }} </span>
                             <p class="small text-muted">{{ bike.driven_kms }} km driven</p>

@@ -29,7 +29,6 @@ def bikes_list(request):
 
         selected_bikes=[]
 
-        count = 0
         for b in all_bikes:
             if str(b.bike_location).lower() == str(selected_city).lower() and b.is_confirmed and not b.is_on_halt:
                 selected_bikes.append(b)
@@ -41,11 +40,10 @@ def bikes_list(request):
                 if str(booking.bike.bike_id) == str(bike.bike_id):
                     if pickup <= booking.dropoff_date and dropoff >= booking.pickup_date:
                         print(bike)
-                        count = count + 1
                         selected_bikes.remove(bike)
 
-        if selected_bikes.count != 0:
-            return render(request, 'bike/viewbike.html', {'selected_bikes': selected_bikes})
+        if len(selected_bikes) != 0:
+            return render(request, 'bike/viewbike.html', {'selected_bikes': selected_bikes, 'pickup': pickup, 'dropoff': dropoff, 'selected_city': selected_city})
 
         return HttpResponse('<h1 class="display-1">No bike available in selected city</h1>')
     return redirect('home')
@@ -86,7 +84,7 @@ def confirm_booking(request):
         dropoff_date = easy_date.convert_from_string(request.session['dropoffDate'], '%Y-%m-%d', '%d-%m-%Y',
                                                      date)
 
-        total_days = (dropoff_date - pickup_date).days
+        total_days = (dropoff_date - pickup_date).days + 1
         total_rent = int(bike.rent_per_day) * int(total_days)
 
         new_booking.total_days=int(total_days)

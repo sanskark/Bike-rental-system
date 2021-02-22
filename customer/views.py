@@ -103,6 +103,6 @@ def cancel_booking(request):
             messages.success(request, 'Your ride has been canceled successfully!')
             return redirect('customer-myrides')
         messages.warning(request, 'You can not cancel this ride!')
-        return redirect('customer-mybikes')
+        return redirect('customer-myrides')
 
-    return redirect('customer-mybikes')
+    return redirect('customer-myrides')
