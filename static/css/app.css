@@ -21,7 +21,7 @@ input[type='date']{
 #locationcard{
     background-color: white;
 
-    margin-top: 11rem;
+    margin-top: 9rem;
     margin-left: 10rem;
     margin-right: 9rem;
     padding-inline: 1rem;
@@ -37,7 +37,6 @@ input[type='date']{
 
 .content-section {
     background-color: white;
-
     margin: auto;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(66, 47, 47, 0.11);
     width: 26.5rem;

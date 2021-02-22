@@ -44,7 +44,8 @@
     span {
         font-weight: 400;
     }
-    .mybikesbutton{
+
+    .mybikesbutton {
         width: 7.5rem;
         height: 2.1rem;
     }
@@ -68,8 +69,8 @@
     <div class="col-2 pr-1">
         <div class="pt-2">
             {% if bike.is_confirmed %}
-            <button type="button"  class="btn btn-outline-success btn-sm mybikesbutton" data-toggle="tooltip" data-placement="top"
-                title="your bike is approved" disabled>Confirmed</button>
+            <button type="button" class="btn btn-outline-success btn-sm mybikesbutton" data-toggle="tooltip"
+                data-placement="top" title="your bike is approved" disabled>Confirmed</button>
             {% else %}
             <button type="button" class="btn btn-outline-danger btn-sm mybikesbutton" data-toggle="tooltip"
                 data-placement="top" title="your bike is not approved yet" disabled>Not confirmed</button>
@@ -80,29 +81,33 @@
             <form action="{% url 'dealer-holdbike' %}" enctype="multipart/form-data" method="POST" class="mb-0">
                 {% csrf_token %}
                 {% if bike.is_on_halt %}
-                    <button class="btn btn-outline-secondary btn-sm mybikesbutton" value="{{ bike.bike_id }}" name="remove_hold">Remove hold</button>
-<!--                    </form>-->
+                <button class="btn btn-outline-secondary btn-sm mybikesbutton" value="{{ bike.bike_id }}"
+                    name="remove_hold">Remove hold</button>
+                <!--                    </form>-->
                 {% else %}
-<!--                    <form action="{% url 'dealer-holdbike' %}" enctype="multipart/form-data" method="POST" class="mb-0">-->
+                <!--                    <form action="{% url 'dealer-holdbike' %}" enctype="multipart/form-data" method="POST" class="mb-0">-->
                 {% csrf_token %}
-                    <button class="btn btn-outline-secondary btn-sm mybikesbutton" value="{{ bike.bike_id }}" name="put_on_hold">Put on hold</button>
+                <button class="btn btn-outline-secondary btn-sm mybikesbutton" value="{{ bike.bike_id }}"
+                    name="put_on_hold">Put on hold</button>
                 {% endif %}
             </form>
 
             {% else %}
-                <button type="button" class="btn btn-outline-secondary btn-sm mybikesbutton" disabled>Put on hold</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm mybikesbutton" disabled>Put on hold</button>
             {% endif %}
         </div>
         <div class="pt-1">
             <form action="{% url 'dealer-editbike' %}" enctype="multipart/form-data" method="POST" class="mb-0">
                 {% csrf_token %}
-                <button class="btn btn-warning  btn-sm mybikesbutton" value="{{ bike.bike_id }}" name="editbutton">Edit</button>
+                <button class="btn btn-warning  btn-sm mybikesbutton" value="{{ bike.bike_id }}"
+                    name="editbutton">Edit</button>
             </form>
         </div>
         <div class="pt-1">
             <form action="{% url 'dealer-deletebike' %}" enctype="multipart/form-data" method="POST" class="mb-0">
                 {% csrf_token %}
-                <button class="btn btn-danger btn-sm mybikesbutton" value="{{ bike.bike_id }}" name="deletebutton">Delete</button>
+                <button class="btn btn-danger btn-sm mybikesbutton" value="{{ bike.bike_id }}"
+                    name="deletebutton">Delete</button>
             </form>
         </div>
     </div>

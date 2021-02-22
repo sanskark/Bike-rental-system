@@ -1,0 +1,77 @@
+{% extends 'bikerental/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+    body {
+        background-image: none;
+        background-color: #f3f3f3;
+    }
+
+    #customerheading {
+        text-align: center;
+        letter-spacing: .5em;
+        font-weight: 500;
+    }
+
+    .card {
+        width: 40rem;
+        margin: auto;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(66, 47, 47, 0.11);
+        margin-bottom: .5rem;
+    }
+
+
+
+    .customerimages {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .backbutton {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+</style>
+<div class="row">
+    <legend class="mt-0" id="customerheading">CUSTOMER DETAILS</legend>
+</div>
+<div class="card">
+    <div class="row">
+        <div class="col-12">
+            <div class="pl-3 my-2">
+                <div class="">
+                    <span class="lead">Username: </span>
+                    <span class="blockquote">{{cur_booking.customer.user.username}}</span>
+                </div>
+                <div class="">
+                    <span class="lead">Email address: </span>
+                    <span class="blockquote">{{cur_booking.customer.user.email}}</span>
+                </div>
+                <div class="">
+                    <span class="lead">Mobile number: </span>
+                    <span class="blockquote">{{cur_booking.customer.user.profile.mobile_no }}</span>
+                </div>
+            </div>
+            <div class="customerimages pt-2 border-top">
+                <div class="lead">
+                    ID proof:
+                    <div class="">
+                        <img src="{{ cur_booking.customer.user.profile.id_proof.url }}" alt="">
+                    </div>
+                </div>
+                <div class="lead">
+                    Driving license:
+                    <div class="">
+                        <img src="{{ cur_booking.customer.user.profile.driving_license.url }}" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="backbutton mb-2 mt-3">
+                <a href="{% url 'dealer-bookings' %}" class="btn btn-warning px-4">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

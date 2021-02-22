@@ -6,7 +6,7 @@ from .forms import DealerRegisterForm, DealerUpdateForm, DealerProfileUpdateForm
 from bikerental.models import User, Location
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
-from bike.models import Bike
+from bike.models import Bike, Booking
 
 # Create your views here.
 
@@ -235,3 +235,24 @@ def hold_bike(request):
 
         return redirect('dealer-mybikes')
     return redirect('dealer-mybikes')
+
+@login_required
+def dealer_bookings(request):
+    loggedin_user_id = request.user.id;
+    user_bikes = list(Bike.objects.filter(owner=loggedin_user_id))
+
+    user_bikes_id = []
+    for b in user_bikes:
+        user_bikes_id.append(b.bike_id)
+
+    user_bookings = Booking.objects.filter(bike_id__in=user_bikes_id)
+
+    return render(request,'dealer/dealerbookings.html',{'user_bookings': user_bookings})
+
+def customer_details(request):
+    if request.method == "POST":
+        booking_id = request.POST['customer_details_button']
+
+        cur_booking = Booking.objects.get(booking_id=booking_id)
+        # return HttpResponse(cur_booking)
+        return render(request, 'dealer/customerdetails.html',{'cur_booking':cur_booking})

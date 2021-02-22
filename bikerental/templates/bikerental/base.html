@@ -60,43 +60,12 @@
                             </li>
                         </ul>
                         <ul class="navbar-nav">
-                            {% if user.is_authenticated and user.is_customer %}
-                            <li class="nav-item mr-5">
-                                <div id="search">
-                                    <a class="nav-link">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-search mb-1" viewBox="0 0 16 16">
-                                            <path
-                                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                                        </svg> Search</a>
-                                </div>
-                            </li>
-                            <li class="nav-item mr-5 mt-1">
-                                <span class="">&#124;</span>
-                            </li>
-                            {% elif user.is_authenticated and user.is_dealer %}
-                            {% else %}
-                            <li class="nav-item mr-5">
-                                <div id="search">
-                                    <a class="nav-link">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-search mb-1" viewBox="0 0 16 16">
-                                            <path
-                                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                                        </svg> Search</a>
-                                </div>
-                            </li>
-                            <li class="nav-item mr-5 mt-1">
-                                <span class="">&#124;</span>
-                            </li>
-                            {% endif %}
-
-
                             <!--LOGIN SIGNUP BUTTON-->
 
                             {% if user.is_authenticated and user.is_customer %}
                             <li class="nav-item">
-                                <a class="btn btn-light my-2 my-sm-0 mr-2" href="{% url 'customer-myrides' %}">My Rides</a>
+                                <a class="btn btn-light my-2 my-sm-0 mr-2" href="{% url 'customer-myrides' %}">My
+                                    Rides</a>
                             </li>
                             <li class="nav-item">
                                 <a class="btn btn-light my-2 my-sm-0 mr-2"
@@ -108,6 +77,10 @@
                             </li>
                             {% elif user.is_authenticated and user.is_dealer %}
 
+                            <li class="nav-item">
+                                <a class="btn btn-light my-2 my-sm-0 mr-2"
+                                    href="{% url 'dealer-bookings' %}">Bookings</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="btn btn-light my-2 my-sm-0 mr-2" href="{% url 'dealer-mybikes' %}">My
                                     Bikes</a>

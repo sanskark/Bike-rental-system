@@ -16,17 +16,13 @@
         letter-spacing: .5em;
         font-weight: 500;
     }
+    .forgotps{
+        display:flex;
+        flex-direction:row;
+        justify-content:space-between;
+    }
 </style>
 <div class="content-section px-3 py-3">
-    <!-- <div>
-        {% if messages %}
-        {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">
-            {{ message }}
-        </div>
-        {% endfor %}
-        {% endif %}
-    </div> -->
     <form method="POST" class="">
         {% csrf_token %}
         <fieldset class="form-group">
@@ -37,7 +33,10 @@
             <button class="btn btn-warning btn-block" type="submit">Log in</button>
         </div>
     </form>
-    <div class="pt-1 text-right">
+    <div class="pt-1 forgotps">
+        <small class="text-muted">
+            <a href="{% url 'password_reset' %}">forgot password?</a>
+        </small>
         <a class="small " href="{% url 'dealer-register' %}">
             Need An Account?
         </a>
