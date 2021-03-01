@@ -6,6 +6,9 @@ from customer.models import Customer
 from django.contrib import messages
 import easy_date
 from datetime import date
+from django.conf import settings
+from django.core.mail import send_mail
+import razorpay
 # Create your views here.
 
 @login_required
@@ -71,7 +74,11 @@ def confirm_booking(request):
         bike = Bike.objects.get(bike_id=id)
 
         loggedin_userid = request.user.id
-        # customer = User.objects.get(id=loggedin_userid)
+        customer = Customer.objects.get(user_id=loggedin_userid)
+
+        if customer.user.profile.driving_license.name == 'default.jpg' and customer.user.profile.id_proof.name == 'default.jpg':
+            messages.warning(request, 'Upload your ID proof and driving license before booking ride!')
+            return redirect('customer-profile')
 
         new_booking = Booking()
         new_booking.bike = Bike.objects.get(bike_id=id)
@@ -89,7 +96,22 @@ def confirm_booking(request):
 
         new_booking.total_days=int(total_days)
         new_booking.total_rent=int(total_rent)
+
         new_booking.save()
+
+        #to send email to customer
+        username = request.user.username
+        subject = 'Your booking has been confirmed'
+        message = f'Dear {username}, thank you for booking a ride.\n' \
+                  f'Your booking from {pickup_date} to {dropoff_date} has been confirmed\n' \
+                  f'Total days: {total_days}\n' \
+                  f'Total rent: {total_rent}\n' \
+                  f'Please carry your original driving license and ID proof\n'
+        email_from = settings.EMAIL_HOST_USER
+        recipient = [request.user.email]
+
+        send_mail(subject, message, email_from, recipient)
+
         messages.success(request, 'Your booking has been confirmed')
         return redirect('home')
     return redirect('home')

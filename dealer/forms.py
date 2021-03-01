@@ -12,7 +12,7 @@ class DealerRegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields=['username', 'email', 'mobile_no', 'password1', 'password2']
+        fields=['username', 'full_name', 'email', 'mobile_no', 'password1', 'password2']
 
     @transaction.atomic
     def save(self):
@@ -30,7 +30,8 @@ class DealerUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username',
-                  'email']
+                  'email',
+                  'full_name']
 
 class DealerExtraInfoUpdateForm(forms.ModelForm):
     class Meta:

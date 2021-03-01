@@ -11,7 +11,7 @@ class CustomerSignupForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields=['username', 'email', 'password1', 'password2']
+        fields=['username', 'full_name', 'email', 'password1', 'password2']
 
     @transaction.atomic
     def save(self):
@@ -29,7 +29,8 @@ class CustomerUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username',
-                  'email']
+                  'email',
+                  'full_name']
 
 # customer profile update form
 class CustomerProfileUpdateForm(forms.ModelForm):

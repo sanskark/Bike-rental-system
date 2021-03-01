@@ -6,6 +6,7 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     is_customer = models.BooleanField(default=False)
     is_dealer = models.BooleanField(default=False)
+    full_name = models.CharField(max_length=50, default='')
 
 class Location(models.Model):
     location_id = models.IntegerField(primary_key=True, auto_created=True)
