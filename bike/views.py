@@ -112,6 +112,15 @@ def confirm_booking(request):
 
         send_mail(subject, message, email_from, recipient)
 
+        #to send email to dealer
+        dealer_username = bike.owner.user.username
+        subject = 'Your bike has been booked'
+        message = f'Dear {dealer_username}, Your bike {bike.bike_company} {bike.bike_model} has been booked by {username} from {pickup_date} to {dropoff_date}\n' \
+                  f'Total days: {total_days} \nTotal rent: {total_rent}\n'
+        recipient = [bike.owner.user.email]
+
+        send_mail(subject, message, email_from, recipient)
+
         messages.success(request, 'Your booking has been confirmed')
-        return redirect('home')
+        return redirect('customer-myrides')
     return redirect('home')

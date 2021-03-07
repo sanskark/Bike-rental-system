@@ -90,6 +90,8 @@ def my_rides(request):
                 b.save()
             user_booking.append(b)
             count = count + 1
+
+    user_booking.reverse()
     # return HttpResponse(count)
     return render(request,'customer/myrides.html',{'user_booking': user_booking})
 
