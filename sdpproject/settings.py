@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'dealer.apps.DealerConfig',
     'bike.apps.BikeConfig',
     'crispy_forms',
+    'crispy_bootstrap4',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -125,6 +126,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 #For changing bootstrap version 2 to 4 in crispy
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 #to store uploaded files/images
@@ -146,3 +148,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
